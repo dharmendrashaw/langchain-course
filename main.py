@@ -7,6 +7,7 @@ from langchain.tools import tool
 from langchain_core.messages import HumanMessage
 from langchain_ollama import ChatOllama
 from langchain_tavily import TavilySearch
+from langchain_google_genai import ChatGoogleGenerativeAI
 from typing import List
 from pydantic import BaseModel, Field
 
@@ -40,7 +41,8 @@ class AgentResponse(BaseModel):
     sources: List[Source] = Field(default_factory=list, description="List of sources used to generate the answer")
 
 
-llm = ChatOllama(temperature=0, model="qwen3.5:2b") 
+# llm = ChatOllama(temperature=0, model="qwen3.5:2b") 
+llm = ChatGoogleGenerativeAI(model="gemini-3.6-flash", temperature=0)
 tools = [TavilySearch()]  #1 [search]
 # Response format mostly doesn't work with small model with AgentResponse. 
 # need to test on bigger mode like 8B or greater.
